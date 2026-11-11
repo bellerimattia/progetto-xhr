@@ -34,4 +34,4 @@ progetto-xhr/
 ```
 
 ## Autori
-NOME COGNOME – NOME COGNOME, classe 5ª
+mattia belleri, classe 5ª
