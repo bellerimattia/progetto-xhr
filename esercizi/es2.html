@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Es.2 - onload</title>
+</head>
+<body>
+  <h1>Callback con onload</h1>
+  <button id="btn">Carica testo</button>
+  <button id="btn-errore">Prova file inesistente</button>
+  <pre id="output"></pre>
+
+  <script>
+    function carica(url) {
+      const output = document.getElementById('output');
+      const xhr = new XMLHttpRequest();
+
+      // onload: viene chiamata UNA sola volta, a richiesta completata
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          console.log(xhr.responseText);
+          output.textContent = xhr.responseText;
+        } else {
+          console.error('Errore HTTP:', xhr.status);
+          output.textContent = 'Errore HTTP: ' + xhr.status;
+        }
+      };
+
+      // onerror: problemi di rete (il server non ha proprio risposto)
+      xhr.onerror = function () {
+        console.error('Errore di rete');
+        output.textContent = 'Errore di rete';
+      };
+
+      xhr.open('GET', url, true);
+      xhr.send();
+    }
+
+    document.getElementById('btn').addEventListener('click', () => carica('dati.txt'));
+    document.getElementById('btn-errore').addEventListener('click', () => carica('non-esiste.txt'));
+  </script>
+</body>
+</html>

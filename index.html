@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mini Dashboard Meteo/Utenti – XMLHttpRequest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="testata">
+    <h1>Mini Dashboard</h1>
+    <p>Meteo e utenti caricati con <code>XMLHttpRequest</code>, senza ricaricare la pagina.</p>
+  </header>
+
+  <nav class="schede" role="tablist">
+    <button class="scheda attiva" data-pannello="meteo" role="tab">Meteo</button>
+    <button class="scheda" data-pannello="utenti" role="tab">Utenti</button>
+    <button class="scheda" data-pannello="formati" role="tab">JSON e XML</button>
+  </nav>
+
+  <main>
+    <!-- PANNELLO METEO -->
+    <section id="meteo" class="pannello attivo">
+      <form id="form-meteo" class="ricerca">
+        <label for="citta">Città</label>
+        <div class="riga">
+          <input id="citta" type="text" placeholder="es. Milano" autocomplete="off" required>
+          <button type="submit">Cerca</button>
+        </div>
+      </form>
+      <div id="stato-meteo" class="stato" aria-live="polite"></div>
+      <ul id="lista-citta" class="lista-citta"></ul>
+      <div id="risultato-meteo"></div>
+    </section>
+
+    <!-- PANNELLO UTENTI -->
+    <section id="utenti" class="pannello">
+      <form id="form-utenti" class="ricerca">
+        <label for="nome-utente">Nome utente</label>
+        <div class="riga">
+          <input id="nome-utente" type="text" placeholder="es. Leanne" autocomplete="off">
+          <button type="submit">Cerca</button>
+        </div>
+      </form>
+      <div id="stato-utenti" class="stato" aria-live="polite"></div>
+      <ul id="lista-utenti" class="lista-utenti"></ul>
+    </section>
+
+    <!-- PANNELLO JSON vs XML -->
+    <section id="formati" class="pannello">
+      <p class="spiega">Gli stessi dati in due formati: il JSON si legge con <code>responseText</code> + <code>JSON.parse()</code>, l'XML con <code>responseXML</code>.</p>
+      <button id="btn-formati">Carica entrambi</button>
+      <div class="confronto">
+        <div>
+          <h2>studenti.json</h2>
+          <p class="nota">responseText</p>
+          <ul id="out-json"></ul>
+        </div>
+        <div>
+          <h2>studenti.xml</h2>
+          <p class="nota">responseXML</p>
+          <ul id="out-xml"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Dati meteo: <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a> ·
+    Utenti: <a href="https://jsonplaceholder.typicode.com" target="_blank" rel="noopener">JSONPlaceholder</a>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

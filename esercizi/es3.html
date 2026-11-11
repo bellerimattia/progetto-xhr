@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Es.3 - responseText vs responseXML</title>
+</head>
+<body>
+  <h1>responseText vs responseXML</h1>
+  <button onclick="caricaJSON()">Carica JSON</button>
+  <button onclick="caricaXML()">Carica XML</button>
+  <button onclick="xmlSuJson()">responseXML su un JSON</button>
+  <pre id="output"></pre>
+
+  <script>
+    const output = document.getElementById('output');
+
+    // JSON → responseText + JSON.parse
+    function caricaJSON() {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          const dati = JSON.parse(xhr.responseText);   // <-- responseText
+          console.log(dati);
+          output.textContent = 'JSON:\n' + dati.map(s => s.nome + ': ' + s.voto).join('\n');
+        }
+      };
+      xhr.open('GET', 'studenti.json', true);
+      xhr.send();
+    }
+
+    // XML → responseXML
+    function caricaXML() {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          const doc = xhr.responseXML;                  // <-- responseXML (Document)
+          const nomi = doc.querySelectorAll('studente > nome');
+          nomi.forEach(n => console.log(n.textContent));
+          output.textContent = 'XML:\n' + Array.from(nomi).map(n => n.textContent).join('\n');
+        }
+      };
+      xhr.open('GET', 'studenti.xml', true);
+      xhr.send();
+    }
+
+    // Verifica dell'errore comune n.3: responseXML su un JSON restituisce null
+    function xmlSuJson() {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        output.textContent = 'responseXML = ' + xhr.responseXML;   // stampa "null"
+      };
+      xhr.open('GET', 'studenti.json', true);
+      xhr.send();
+    }
+  </script>
+</body>
+</html>

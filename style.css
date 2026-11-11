@@ -1,0 +1,128 @@
+:root {
+  --notte: #12355b;
+  --cielo: #4ea5d9;
+  --nebbia: #eaf3fa;
+  --carta: #ffffff;
+  --sole: #f2a541;
+  --errore: #c0392b;
+  --testo: #1c2b3a;
+  --tenue: #5b6f82;
+  --bordo: #cfe0ee;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --notte: #9fd0f0;
+    --cielo: #4ea5d9;
+    --nebbia: #0f1e2e;
+    --carta: #17293d;
+    --testo: #e6eef6;
+    --tenue: #9fb3c6;
+    --bordo: #2a425b;
+    --errore: #ff7b6b;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--testo);
+  background: var(--nebbia);
+}
+
+code { font-size: .92em; background: var(--carta); padding: 0 .3em; border-radius: 4px; }
+
+.testata, .schede, main, footer { max-width: 760px; margin: 0 auto; padding: 0 1.25rem; }
+
+.testata { padding-top: 2.5rem; }
+.testata h1 {
+  font-family: "Bricolage Grotesque", system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.4rem, 7vw, 3.6rem);
+  line-height: 1;
+  margin: 0 0 .5rem;
+  color: var(--notte);
+  letter-spacing: -.02em;
+}
+.testata p { margin: 0; color: var(--tenue); }
+
+/* Schede */
+.schede { display: flex; gap: .25rem; margin-top: 2rem; border-bottom: 2px solid var(--bordo); }
+.scheda {
+  background: none; border: 0; padding: .7rem 1rem; font: inherit; font-weight: 700;
+  color: var(--tenue); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px;
+}
+.scheda.attiva { color: var(--notte); border-bottom-color: var(--cielo); }
+
+.pannello { display: none; padding: 1.5rem 0 2rem; }
+.pannello.attivo { display: block; }
+
+/* Ricerca */
+.ricerca label { display: block; font-weight: 700; margin-bottom: .35rem; }
+.riga { display: flex; gap: .5rem; }
+input {
+  flex: 1; font: inherit; padding: .7rem .9rem; border: 2px solid var(--bordo);
+  border-radius: 10px; background: var(--carta); color: var(--testo); min-width: 0;
+}
+button {
+  font: inherit; font-weight: 700; padding: .7rem 1.2rem; border: 0; border-radius: 10px;
+  background: var(--notte); color: var(--nebbia); cursor: pointer;
+}
+input:focus-visible, button:focus-visible { outline: 3px solid var(--sole); outline-offset: 2px; }
+
+.stato { min-height: 1.5rem; margin: .75rem 0; color: var(--tenue); }
+.stato.errore { color: var(--errore); font-weight: 700; }
+
+/* Elenco città trovate */
+.lista-citta { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: .4rem; }
+.lista-citta button {
+  background: var(--carta); color: var(--notte); border: 2px solid var(--bordo);
+  padding: .35rem .8rem; font-weight: 400; font-size: .95rem;
+}
+.lista-citta button.scelta { border-color: var(--cielo); font-weight: 700; }
+
+/* Meteo attuale */
+.adesso {
+  display: grid; grid-template-columns: auto 1fr; gap: 0 1.5rem; align-items: end;
+  padding: 1.5rem 0; border-bottom: 2px solid var(--bordo);
+}
+.temperatura {
+  font-family: "Bricolage Grotesque", system-ui, sans-serif;
+  font-weight: 800; font-size: clamp(4.5rem, 18vw, 7.5rem); line-height: .85;
+  color: var(--notte); letter-spacing: -.04em;
+}
+.temperatura sup { font-size: .35em; color: var(--sole); vertical-align: top; }
+.adesso h2 { margin: 0; font-size: 1.4rem; }
+.adesso p { margin: .2rem 0 0; color: var(--tenue); }
+
+.giorni { list-style: none; padding: 0; margin: 1rem 0 0; }
+.giorni li {
+  display: grid; grid-template-columns: 7rem 1fr auto; gap: 1rem; padding: .6rem 0;
+  border-bottom: 1px solid var(--bordo);
+}
+.giorni .max { font-weight: 700; }
+.giorni .min { color: var(--tenue); margin-left: .5rem; }
+
+/* Utenti */
+.lista-utenti { list-style: none; padding: 0; margin: 0; }
+.lista-utenti li { padding: 1rem 0; border-bottom: 1px solid var(--bordo); }
+.lista-utenti strong { font-size: 1.1rem; }
+.lista-utenti span { display: block; color: var(--tenue); font-size: .95rem; }
+
+/* JSON vs XML */
+.spiega { margin-top: 0; }
+.confronto { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+.confronto h2 { font-size: 1.1rem; margin: 0; }
+.confronto .nota { margin: 0 0 .5rem; color: var(--tenue); font-size: .9rem; }
+.confronto ul { padding-left: 1.2rem; margin: 0; }
+
+footer { padding-bottom: 2rem; color: var(--tenue); font-size: .9rem; }
+footer a { color: var(--notte); }
+
+@media (max-width: 520px) {
+  .confronto { grid-template-columns: 1fr; }
+  .giorni li { grid-template-columns: 5.5rem 1fr auto; gap: .5rem; }
+}

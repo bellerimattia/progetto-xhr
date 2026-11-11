@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Es.4 - POST con send()</title>
+</head>
+<body>
+  <h1>Invio dati con POST</h1>
+  <button id="btn">Invia post</button>
+  <pre id="output"></pre>
+
+  <script>
+    document.getElementById('btn').addEventListener('click', function () {
+      const output = document.getElementById('output');
+      const xhr = new XMLHttpRequest();
+
+      // open() PRIMA: configura metodo e URL
+      xhr.open('POST', 'https://jsonplaceholder.typicode.com/posts', true);
+
+      // gli header si impostano dopo open() e prima di send()
+      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+      xhr.onload = function () {
+        if (xhr.status === 201) {   // 201 = Created
+          const risposta = JSON.parse(xhr.responseText);
+          console.log('Risposta server:', risposta);
+          output.textContent = 'Status ' + xhr.status + '\n' + JSON.stringify(risposta, null, 2);
+        } else {
+          output.textContent = 'Errore HTTP: ' + xhr.status;
+        }
+      };
+      xhr.onerror = () => output.textContent = 'Errore di rete';
+
+      // send() DOPO: il body è il JSON trasformato in stringa
+      xhr.send(JSON.stringify({
+        title: 'Esercitazione XHR',
+        body: 'Contenuto inviato',
+        userId: 1
+      }));
+    });
+  </script>
+</body>
+</html>
